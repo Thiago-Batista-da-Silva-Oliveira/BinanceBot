@@ -2,8 +2,10 @@
 const api = require('./api')
 const symbol = process.env.SYMBOL
 const profitability = parseFloat(process.env.PROFITABILITY)
+const day = 60000*60*24
 
 
+//Compra e Venda
 setInterval(async() => {
   const result  =  await api.depth(symbol)
 
@@ -51,3 +53,17 @@ setInterval(async() => {
 
  
 }, process.env.CRAWLER_INTERVAL)
+
+//Máxima e mínima
+setInterval(async() => {
+  const result = await api.dayStatistics(symbol)
+  let lowerPrice = result.lowPrice
+  let higherPrice = result.highPrice
+  let closeTime = result.closeTime
+  let date = new Date(closeTime)
+
+  console.log(`Preço mais baixo de ${symbol} na data ${date} : ${lowerPrice} `)
+  console.log(`Preço mais alto  de ${symbol} na data ${date} : ${higherPrice} `)
+  
+
+}, day)
