@@ -60,6 +60,10 @@ async function time(){
     return publicCall('/v3/time')
 }
 
+async function dayStatistics(symbol='BTCBUSD'){
+    return publicCall('/v3/ticker/24hr',{symbol} )
+}
+
 async function depth(symbol = 'BTCBRL', limit= 5){
     return publicCall('/v3/depth', {symbol, limit})
 }
